@@ -53,13 +53,16 @@ public class TaskController {
     }
 
     @PutMapping("/change_position")
-    public ResponseEntity<Void> toggleIndex(
+    public ResponseEntity<List<ResponseTaskDTO>> togglePosition(
             @RequestBody @Valid ToggleTaskPositionDTO toggleTaskPositionDTO
     )
             throws ValidationException, ConflictException, EntityNotFoundException {
         this.taskService.togglePosition(toggleTaskPositionDTO);
 
-        return ResponseEntity.ok().build();
+        List<Task> tasks = this.taskService.getAll();
+        List<ResponseTaskDTO> responseTaskDTO = tasks.stream().map(ResponseTaskDTO::new).toList();
+
+        return ResponseEntity.ok(responseTaskDTO);
     }
 
     @DeleteMapping("/{taskId}")
