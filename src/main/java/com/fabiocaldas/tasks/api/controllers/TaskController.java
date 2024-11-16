@@ -45,7 +45,7 @@ public class TaskController {
             @PathVariable int taskId,
             @RequestBody @Valid UpdateTaskDTO updateTaskDTO
     )
-            throws DTOEmptyException, EntityNotFoundException, ConflictException {
+            throws DTOEmptyException, EntityNotFoundException, ConflictException, ValidationException {
         Task taskUpdated = this.taskService.update(taskId, updateTaskDTO);
         ResponseTaskDTO responseTaskDTO = new ResponseTaskDTO(taskUpdated);
 
