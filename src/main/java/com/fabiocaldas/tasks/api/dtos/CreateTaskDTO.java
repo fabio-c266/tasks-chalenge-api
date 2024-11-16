@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -26,5 +25,5 @@ public record CreateTaskDTO(
         @Future(message = "A data precisa estar no futuro")
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         @JsonAlias("expire_at") LocalDateTime expireAt
-)
-{}
+) {
+}
