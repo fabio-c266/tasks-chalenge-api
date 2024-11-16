@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -20,9 +21,15 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
-    public Task create(CreateTaskDTO createTaskDTO) throws ConflictException {
+    final BigDecimal minPrice = new BigDecimal("0.01");
+
+    public Task create(CreateTaskDTO createTaskDTO) throws ConflictException, ValidationException {
         if (this.taskRepository.existsByName(createTaskDTO.name())) {
             throw new ConflictException("tarefa", "nome");
+        }
+
+        if (createTaskDTO.price().compareTo(this.minPrice) < 0) {
+            throw new ValidationException("É necessário que o preço seja por o menos 1 centavo");
         }
 
         int lastIndex = this.taskRepository.findLastPosition().orElse(0);
@@ -45,7 +52,7 @@ public class TaskService {
     }
 
     @Transactional
-    public Task update(int taskId, UpdateTaskDTO updateTaskDTO) throws EntityNotFoundException, DTOEmptyException, ConflictException {
+    public Task update(int taskId, UpdateTaskDTO updateTaskDTO) throws EntityNotFoundException, DTOEmptyException, ConflictException, ValidationException {
         if (updateTaskDTO.name() == null
                 && updateTaskDTO.price() == null
                 && updateTaskDTO.expireAt() == null
@@ -59,7 +66,13 @@ public class TaskService {
             task.setName(updateTaskDTO.name());
         }
 
-        if (updateTaskDTO.price() != null) task.setPrice(updateTaskDTO.price());
+        if (updateTaskDTO.price() != null) {
+            if (updateTaskDTO.price().compareTo(this.minPrice) < 0) {
+                throw new ValidationException("É necessário que o preço seja por o menos 1 centavo");
+            }
+
+            task.setPrice(updateTaskDTO.price());
+        }
         if (updateTaskDTO.expireAt() != null) task.setExpireAt(updateTaskDTO.expireAt());
 
         return task;

@@ -19,7 +19,7 @@ public record CreateTaskDTO(
         String name,
 
         @NotNull(message = "Campo obrigatório")
-        @Range(min = 1, message = "O preço precisa ser maior que 1")
+        @Range(min = 0, message = "O preço precisa ser no mínimo 0")
         BigDecimal price,
 
         @NotNull(message = "Campo obrigatório")

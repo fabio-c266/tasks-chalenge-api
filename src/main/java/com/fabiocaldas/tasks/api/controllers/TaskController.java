@@ -25,7 +25,7 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping
-    public ResponseEntity<ResponseTaskDTO> create(@RequestBody @Valid CreateTaskDTO createTaskDTO) throws ConflictException {
+    public ResponseEntity<ResponseTaskDTO> create(@RequestBody @Valid CreateTaskDTO createTaskDTO) throws ConflictException, ValidationException {
         Task taskCreated = this.taskService.create(createTaskDTO);
         ResponseTaskDTO responseTaskDTO = new ResponseTaskDTO(taskCreated);
 

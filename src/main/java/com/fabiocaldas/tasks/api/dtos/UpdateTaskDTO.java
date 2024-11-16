@@ -15,7 +15,7 @@ public record UpdateTaskDTO(
         @Size(max = 80, message = "Precisa ser no máximo 80 caracteris")
         String name,
 
-        @Range(min = 1, message = "O preço precisa ser maior que 1")
+        @Range(min = 0, message = "O preço precisa ser maior que 0")
         BigDecimal price,
 
         @Future(message = "A data precisa estar no futuro")
