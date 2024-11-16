@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,5 +20,5 @@ public record UpdateTaskDTO(
         @Future(message = "A data precisa estar no futuro")
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         @JsonAlias("expire_at") LocalDateTime expireAt
-)
-{}
+) {
+}

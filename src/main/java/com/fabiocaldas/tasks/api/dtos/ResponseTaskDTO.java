@@ -12,8 +12,7 @@ public record ResponseTaskDTO(
         int position,
         LocalDateTime expire_at,
         LocalDateTime created_at
-)
-{
+) {
     public ResponseTaskDTO(Task task) {
         this(
                 task.getId(),

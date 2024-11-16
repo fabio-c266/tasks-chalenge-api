@@ -11,5 +11,5 @@ public record ToggleTaskPositionDTO(
         @NotNull(message = "Campo obrigatório")
         @Range(min = 1, message = "Position inválido")
         @JsonAlias("new_position") int newPosition
-)
-{}
+) {
+}
